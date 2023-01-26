@@ -1,0 +1,25 @@
+:root {
+    --bs-primary: var(--ast-global-color-0);
+    --bs-secondary: var(--ast-global-color-1);
+}
+
+.si,
+.bi {
+    display: inline-block;
+    height: 1.1em;
+    width: 1.1em;
+    vertical-align: middle;
+    position: relative;
+    top: -.0625em;
+    text-align: center;
+    stroke-width: 0;
+    overflow: visible;
+}
+
+.object-center {
+    object-position: center;
+}
+
+.object-cover {
+    object-fit: cover;
+}

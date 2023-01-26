@@ -8,7 +8,6 @@ if (!function_exists('child_require_once')) {
     }
 }
 
-child_require_once('/inc/setup-theme.php');
 child_require_once('/inc/cpt.php');
 child_require_once('/inc/header-hook.php');
 child_require_once('/inc/footer-hook.php');
@@ -23,7 +22,6 @@ function child_enqueue_styles(){
     if(file_exists($tpl_dir . $path)){
         wp_register_style('child-bootstrap-style', $tpl_dir_uri . $path, array(), '5.2.3');
     }
-
     $path = '/js/bootstrap.bundle.min.js';
     if(file_exists($tpl_dir . $path)){
         wp_register_script('child-bootstrap-script', $tpl_dir_uri . $path, array(), '5.2.3', true);
@@ -39,13 +37,12 @@ function child_enqueue_styles(){
     if(file_exists($tpl_dir . $path)){
         wp_register_style('child-main-style', $tpl_dir_uri . $path, array(), filemtime($tpl_dir . $path));
     }
-
     $path = '/js/main.js';
     if(file_exists($tpl_dir . $path)){
         wp_register_script('child-main-script', $tpl_dir_uri . $path, array('jquery'), filemtime($tpl_dir . $path), true);
     }
 
-    if( is_page_template('tpl-home.php') ){
+    if( is_page_template(['tpl-home.php', 'tpl-about.php']) ){
         wp_enqueue_style('child-bootstrap-style');
         wp_enqueue_script('child-bootstrap-script');
     }
@@ -60,6 +57,44 @@ function child_enqueue_styles(){
     }
 }
 add_action('wp_enqueue_scripts', 'child_enqueue_styles', 50);
+
+
+
+function child_setup_theme(){
+    add_theme_support('custom-header', array(
+        'height' => '40',
+        'flex-height' => true,
+        'width' => '140',
+        'flex-width' => true,
+        'uploads' => true,
+        'header-text' => true,
+    ));
+    add_theme_support(
+        'custom-logo',
+        array(
+            'height' => 145,
+            'weight' => 45,
+            'flex-height' => true,
+            'flex-weight' => true,
+        )
+    );
+
+    // register_nav_menus(array(
+    //     'footer1' => __('Footer 1', 'astra-child'),
+    //     'footer2' => __('Footer 2', 'astra-child'),
+    // ));
+}
+add_action('after_setup_theme', 'child_setup_theme');
+
+
+
+// Support for ACF Option page
+if( function_exists('acf_add_options_page') ){
+    acf_add_options_page();
+}
+
+add_filter('wpcf7_autop_or_not', '__return_false');
+add_filter( 'wpcf7_validate_configuration', '__return_false' );
 
 
 // sample ajax request
