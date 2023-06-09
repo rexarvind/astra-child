@@ -34,4 +34,4 @@ function create_news_cpt(){
     register_post_type('news', $args);
     flush_rewrite_rules();
 }
-add_action('init', 'create_news_cpt');
+// add_action('init', 'create_news_cpt');

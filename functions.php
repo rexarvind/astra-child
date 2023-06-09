@@ -42,16 +42,16 @@ function child_enqueue_styles(){
         wp_register_script('child-main-script', $tpl_dir_uri . $path, array('jquery'), filemtime($tpl_dir . $path), true);
     }
 
-    if( is_page_template(['tpl-home.php', 'tpl-about.php']) ){
+    // connect scripts for few templates like this in array format
+    // if( is_page_template(['tpl-home.php', 'tpl-about.php']) ){
         wp_enqueue_style('child-bootstrap-style');
         wp_enqueue_script('child-bootstrap-script');
-    }
-
+    // }
 
 	wp_enqueue_style('child-main-style');
     wp_enqueue_script('child-main-script');
 
-    // connecting alpine last
+    // connecting alpine last so DOM event is ready
     if( is_page_template('tpl-alpine-demo.php') ){
         wp_enqueue_script('child-alpine-script');
     }
@@ -93,6 +93,7 @@ if( function_exists('acf_add_options_page') ){
     acf_add_options_page();
 }
 
+// Remove extra <p> tags from Contact Form 7
 add_filter('wpcf7_autop_or_not', '__return_false');
 add_filter( 'wpcf7_validate_configuration', '__return_false' );
 
@@ -100,13 +101,7 @@ add_filter( 'wpcf7_validate_configuration', '__return_false' );
 // sample ajax request
 // http://example.com/wp-admin/admin-ajax.php?action=test_ajax
 function test_ajax(){
-    $data = array(
-        'staus' => true,
-        'message' => 'Request successfull.',
-        'data' => null,
-    );
-
-    echo json_encode($data);
+    echo json_encode(['status'=> true, 'message'=> 'Request successfull.']);
     exit(0);
 }
 add_action('wp_ajax_test_ajax', 'test_ajax');
@@ -114,11 +109,9 @@ add_action('wp_ajax_nopriv_test_ajax', 'test_ajax');
 
 
 
-
 add_action('admin_menu', function(){
     add_dashboard_page('View CSV Data', 'View CSV Data', 'manage_options', 'child-view-csv-data', 'child_view_csv_data',);
 });
-
 function child_view_csv_data(){
     ?>
     <div class="wrap">
