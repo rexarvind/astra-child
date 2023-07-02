@@ -1,29 +1,31 @@
 <?php
-
 /**
  * Template Name: Home Page
  */
 
 get_header();
-if ( astra_page_layout() == 'left-sidebar' ){
-    get_sidebar();
+
+if (function_exists('astra_page_layout') && astra_page_layout() == 'left-sidebar') {
+  get_sidebar();
 }
 ?>
+<div id="primary" <?php if (function_exists('astra_primary_class')) {
+  astra_primary_class();
+} ?>>
+    <?php function_exists('astra_primary_content_top') ? astra_primary_content_top() : null; ?>
 
-<div id="primary" <?php astra_primary_class(); ?>>
-    <?php astra_primary_content_top(); ?>
+    <section>
+        <div class="container-xl">
+            <!-- start coding -->
+        </div>
+    </section>
 
-
-    <div class="container-xl py-4">
-        <?php astra_content_page_loop(); ?>
-    </div>
-
-
-    <?php astra_primary_content_bottom(); ?>
-</div><!-- #primary -->
-
+    <?php function_exists('astra_content_page_loop') ? astra_content_page_loop() : the_content(); ?>
+    <?php function_exists('astra_primary_content_bottom') ? astra_primary_content_bottom() : null; ?>
+</div>
 <?php
-if ( astra_page_layout() == 'right-sidebar' ){
-    get_sidebar();
+if (function_exists('astra_page_layout') && astra_page_layout() == 'right-sidebar') {
+  get_sidebar();
 }
 get_footer();
+

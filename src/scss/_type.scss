@@ -47,8 +47,7 @@
 }
 
 // Type display classes
-@each $display,
-$font-size in $display-font-sizes {
+@each $display, $font-size in $display-font-sizes {
   .display-#{$display} {
     @include font-size($font-size);
     font-family: $display-font-family;
@@ -83,7 +82,6 @@ $font-size in $display-font-sizes {
   }
 }
 
-
 //
 // Misc
 //
@@ -111,6 +109,6 @@ $font-size in $display-font-sizes {
   color: $blockquote-footer-color;
 
   &::before {
-    content: "\2014\00A0"; // em dash, nbsp
+    content: '\2014\00A0'; // em dash, nbsp
   }
 }

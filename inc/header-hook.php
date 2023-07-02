@@ -1,6 +1,5 @@
 <?php
 
-function child_header(){
-    // echo 'hello';
-}
-add_action('astra_masthead_bottom', 'child_header');
+add_action('astra_masthead_bottom', function () {
+  // write your new header here
+});
