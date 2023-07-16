@@ -1,12 +1,12 @@
 /* elementor => social icon start */
 .elementor-social-icon-instagram {
-  --white: #fff;
-  --blue: #3051f1;
-  --purple: #c92bb7;
-  --red: #f73344;
-  --orange: #fa8e37;
-  --yellow: #fcdf8f;
-  --yellow_two: #fbd377;
-  background: radial-gradient(circle farthest-corner at 20% 112%, var(--yellow) 0%, var(--yellow_two) 10%, var(--orange) 22%, var(--red) 35%, transparent 65%), linear-gradient(145deg, var(--blue) 10%, var(--purple) 70%);
+    --white: #fff;
+    --blue: #3051f1;
+    --purple: #c92bb7;
+    --red: #f73344;
+    --orange: #fa8e37;
+    --yellow: #fcdf8f;
+    --yellow_two: #fbd377;
+    background: radial-gradient(circle farthest-corner at 20% 112%, var(--yellow) 0%, var(--yellow_two) 10%, var(--orange) 22%, var(--red) 35%, transparent 65%), linear-gradient(145deg, var(--blue) 10%, var(--purple) 70%);
 }
 /* elementor => social icon end */

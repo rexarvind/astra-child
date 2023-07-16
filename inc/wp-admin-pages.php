@@ -1,10 +1,10 @@
 <?php
 
 add_action('admin_menu', function () {
-  add_dashboard_page('View CSV Data', 'View CSV Data', 'manage_options', 'child-view-csv-data', 'child_view_csv_data');
+    add_dashboard_page('View CSV Data', 'View CSV Data', 'manage_options', 'child-view-csv-data', 'child_view_csv_data');
 });
 function child_view_csv_data() {
-  ?>
+    ?>
     <div class="wrap">
         <h1>View CSV Data</h1>
         <p>Upload a csv file to view it's content.</p>
@@ -14,10 +14,10 @@ function child_view_csv_data() {
         </form>
         <?php if (isset($_REQUEST['upload_csv'])) {
 
-          $csv_file = $_FILES['csv_file'];
-          $inputFileName = $csv_file['tmp_name'];
-          $fp = fopen($inputFileName, 'r');
-          ?>
+            $csv_file = $_FILES['csv_file'];
+            $inputFileName = $csv_file['tmp_name'];
+            $fp = fopen($inputFileName, 'r');
+            ?>
             <hr>
             <div style="overflow:auto;">
                 <table class="striped widefat wp-list-table">
