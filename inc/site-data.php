@@ -4,12 +4,12 @@ if (!function_exists('get_my_site_data')) {
     function get_my_site_data() {
         $upload_dir_arr = wp_upload_dir();
         return [
-            'data'=> [],
-            'tpl_dir'=> get_stylesheet_directory(),
-            'tpl_dir_uri'=> get_stylesheet_directory_uri(),
-            'upload_dir_arr'=> $upload_dir_arr,
-            'upload_dir'=> $upload_dir_arr['basedir'],
-            'upload_dir_uri'=> $upload_dir_arr['baseurl'],
+            'data' => [],
+            'tpl_dir' => get_stylesheet_directory(),
+            'tpl_dir_uri' => get_stylesheet_directory_uri(),
+            'upload_dir_arr' => $upload_dir_arr,
+            'upload_dir' => $upload_dir_arr['basedir'],
+            'upload_dir_uri' => $upload_dir_arr['baseurl'],
             'admin_email' => get_bloginfo('admin_email'),
             'dev_email' => 'byvexarvind@gmail.com',
         ];
@@ -30,7 +30,6 @@ function generateOTP($length = 4) {
 }
 */
 
-
 /*
 function isValidIndianPhoneNumber($phone = ''){
     $indian_phone_regex = '/^[6-9]\d{9}$/';
@@ -41,4 +40,3 @@ function isValidIndianPhoneNumber($phone = ''){
     }
 }
 */
-

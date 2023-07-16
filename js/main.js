@@ -1,5 +1,4 @@
 jQuery(function ($) {
-
     if (typeof Swiper !== 'undefined') {
         // swiper slider code here
     }
