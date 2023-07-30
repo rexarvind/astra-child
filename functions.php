@@ -1,5 +1,7 @@
 <?php
 
+defined('ABSPATH') || die('403 Forbidden');
+
 // safely require php files
 if (!function_exists('safe_require_once')) {
     function safe_require_once($path = '') {
@@ -64,7 +66,7 @@ add_action(
         // }
 
         // connecting alpine last so DOM event is ready
-        if (is_page_template('tpl-alpine-demo.php')) {
+        if (is_page_template('templates/tpl-alpine-demo.php')) {
             wp_enqueue_script('child-alpine-script');
         }
     },

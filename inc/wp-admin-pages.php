@@ -1,5 +1,7 @@
 <?php
 
+defined('ABSPATH') || die('403 Forbidden');
+
 add_action('admin_menu', function () {
     add_dashboard_page('View CSV Data', 'View CSV Data', 'manage_options', 'child-view-csv-data', 'child_view_csv_data');
 });

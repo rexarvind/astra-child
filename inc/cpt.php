@@ -1,5 +1,7 @@
 <?php
 
+defined('ABSPATH') || die('403 Forbidden');
+
 // place all custom post type code in one file
 
 function create_news_cpt() {

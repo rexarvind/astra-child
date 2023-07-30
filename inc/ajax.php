@@ -1,5 +1,7 @@
 <?php
 
+defined('ABSPATH') || die('403 Forbidden');
+
 // sample ajax request
 // https://example.com/wp-admin/admin-ajax.php?action=test_ajax
 function test_ajax() {

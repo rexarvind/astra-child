@@ -4,18 +4,12 @@
  * Template Name: Alpine Demo
  */
 
+defined('ABSPATH') || die('403 Forbidden');
+
 get_header();
-
-if (function_exists('astra_page_layout') && astra_page_layout() == 'left-sidebar') {
-    get_sidebar();
-}
 ?>
-
-<div id="primary" <?php if (function_exists('astra_primary_class')) {
-    astra_primary_class();
-} ?>>
+<div id="primary" <?php function_exists('astra_primary_class') ? astra_primary_class() : null; ?>>
     <?php function_exists('astra_primary_content_top') ? astra_primary_content_top() : null; ?>
-
 
     <div class="container-xl py-4">
         <?php function_exists('astra_content_page_loop') ? astra_content_page_loop() : the_content(); ?>
@@ -51,9 +45,4 @@ if (function_exists('astra_page_layout') && astra_page_layout() == 'left-sidebar
 })();
 </script>
 
-<?php
-if (function_exists('astra_page_layout') && astra_page_layout() == 'right-sidebar') {
-    get_sidebar();
-}
-get_footer();
-
+<?php get_footer();

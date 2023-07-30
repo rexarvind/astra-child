@@ -1,8 +1,9 @@
 <?php
 
 /**
- * Template Name: Home Page
- */
+ * Template Name: Coming Soon
+ * Template Post Type: page, post, product
+ **/
 
 defined('ABSPATH') || die('403 Forbidden');
 
@@ -13,7 +14,10 @@ get_header();
 
     <section>
         <div class="container text-center">
-            <h1><?php the_title(); ?></h1>
+            <h1>Coming Soon</h1>
+            <h2><?php echo get_the_title(); ?></h2>
+            <br>
+            <a href="<?php echo home_url('/'); ?>" class="button">Back to Home</a>
         </div>
     </section>
 

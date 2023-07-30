@@ -1,5 +1,7 @@
 <?php
 
+defined('ABSPATH') || die('403 Forbidden');
+
 // start PHP sessions
 add_action('init', function () {
     if (!session_id()) {
