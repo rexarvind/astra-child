@@ -1,0 +1,12 @@
+
+body,
+#wpadminbar * {
+    font-family: "Inter",-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Oxygen-Sans,Ubuntu,Cantarell,"Helvetica Neue",sans-serif;
+}
+
+.acf-repeater .acf-row-handle,
+.acf-repeater .acf-row-handle + td {
+    border-top-color: #696969 !important;
+    border-top-width: 2px;
+    border-top-style: dashed;
+}

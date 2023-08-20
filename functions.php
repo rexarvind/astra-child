@@ -1,6 +1,7 @@
 <?php
 
 defined('ABSPATH') || die('403 Forbidden');
+defined('SITE_DEV_EMAIL') || define('SITE_DEV_EMAIL', 'byvexarvind@gmail.com');
 
 // safely require php files
 if (!function_exists('safe_require_once')) {
@@ -20,15 +21,7 @@ safe_require_once('/inc/setup-theme.php');
 safe_require_once('/inc/shortcode.php');
 safe_require_once('/inc/site-data.php');
 safe_require_once('/inc/wp-admin-pages.php');
-
-// change sender email address
-// add_filter('wp_mail_from', function($original_email_address){
-//     return get_bloginfo('admin_email');
-// });
-// change sender name
-// add_filter('wp_mail_from_name', function($original_email_from){
-//     return get_bloginfo('name');
-// });
+safe_require_once('/inc/wp-mail.php');
 
 add_action(
     'wp_enqueue_scripts',
@@ -69,6 +62,14 @@ add_action(
         if (is_page_template('templates/tpl-alpine-demo.php')) {
             wp_enqueue_script('child-alpine-script');
         }
+
+        if( is_singular(['post']) ){
+            $path = '/assets/css/single-post.css';
+            wp_enqueue_style('child-single-post-style', $tpl_dir_uri . $path, [], filemtime($tpl_dir . $path));
+
+            $path = '/assets/js/single-post.js';
+            wp_enqueue_script('child-single-post-script', $tpl_dir_uri . $path, ['jquery'], filemtime($tpl_dir . $path), true);
+        }
     },
     50
 );
@@ -77,10 +78,15 @@ add_action('admin_enqueue_scripts', function () {
     $tpl_dir = get_stylesheet_directory();
     $tpl_dir_uri = get_stylesheet_directory_uri();
 
-    $path = '/js/admin-main.js';
+    $path = '/assets/js/admin-main.js';
     if (file_exists($tpl_dir . $path)) {
         wp_enqueue_script('child-admin-main-script', $tpl_dir_uri . $path, ['jquery'], filemtime($tpl_dir . $path), true);
     }
+    $path = '/assets/css/admin-main.css';
+    if (file_exists($tpl_dir . $path)) {
+        wp_enqueue_style('child-admin-main-style', $tpl_dir_uri . $path, [], filemtime($tpl_dir . $path));
+    }
+    wp_enqueue_style('child-admin-inter-font', 'https://fonts.googleapis.com/css2?family=Inter:wght@500;700&display=swap');
 });
 
 // Load styles to WYSIWYG editor
@@ -88,7 +94,7 @@ add_filter('mce_css', function ($mce_css) {
     $tpl_dir = get_stylesheet_directory();
     $tpl_dir_uri = get_stylesheet_directory_uri();
 
-    $path = '/css/mce-editor.css';
+    $path = '/assets/css/mce-editor.css';
     if (file_exists($tpl_dir . $path)) {
         if (!empty($mce_css)) {
             $mce_css .= ',';
@@ -105,7 +111,7 @@ add_filter('mce_css', function ($mce_css) {
 add_action('login_enqueue_scripts', function () {
     $tpl_dir = get_stylesheet_directory();
     $tpl_dir_uri = get_stylesheet_directory_uri();
-    $path = '/css/login.css';
+    $path = '/assets/css/login.css';
     if (file_exists($tpl_dir . $path)) {
         wp_enqueue_style('child-login-style', $tpl_dir_uri . $path, [], filemtime($tpl_dir . $path));
     }
