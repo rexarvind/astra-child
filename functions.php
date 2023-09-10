@@ -1,17 +1,26 @@
 <?php
 
-defined('ABSPATH') || die('403 Forbidden');
+defined('ABSPATH') || exit();
+defined('SITE_NAME') || define('SITE_NAME', 'WordPress Site Name');
+defined('SITE_ADMIN_EMAIL') || define('SITE_ADMIN_EMAIL', get_bloginfo('admin_email'));
 defined('SITE_DEV_EMAIL') || define('SITE_DEV_EMAIL', 'byvexarvind@gmail.com');
+defined('TPL_DIR') || define('TPL_DIR', get_stylesheet_directory());
+defined('TPL_DIR_URI') || define('TPL_DIR_URI', get_stylesheet_directory_uri());
+defined('SITE_UPLOAD_DIR_ARR') || define('SITE_UPLOAD_DIR_ARR', wp_upload_dir());
+defined('SITE_UPLOAD_DIR') || define('SITE_UPLOAD_DIR', (is_array(SITE_UPLOAD_DIR_ARR) && isset(SITE_UPLOAD_DIR_ARR['basedir'])) ? SITE_UPLOAD_DIR_ARR['basedir'] : $_SERVER['DOCUMENT_ROOT']);
+defined('SITE_UPLOAD_DIR_URI') || define('SITE_UPLOAD_DIR_URI', (is_array(SITE_UPLOAD_DIR_ARR) && isset(SITE_UPLOAD_DIR_ARR['baseurl'])) ? SITE_UPLOAD_DIR_ARR['baseurl'] : 'https://' . $_SERVER['HTTP_HOST']);
+
 
 // safely require php files
 if (!function_exists('safe_require_once')) {
-    function safe_require_once($path = '') {
-        $path = get_stylesheet_directory() . $path;
+    function safe_require_once($path = '')
+    {
+        $path = TPL_DIR . $path;
         file_exists($path) ? require_once $path : null;
     }
 }
 
-safe_require_once('/inc/acf.php');
+safe_require_once('/inc/acf/index.php');
 safe_require_once('/inc/ajax.php');
 safe_require_once('/inc/contact-form-7.php');
 safe_require_once('/inc/cpt.php');
@@ -19,64 +28,59 @@ safe_require_once('/inc/footer-hook.php');
 safe_require_once('/inc/header-hook.php');
 safe_require_once('/inc/setup-theme.php');
 safe_require_once('/inc/shortcode.php');
-safe_require_once('/inc/site-data.php');
-safe_require_once('/inc/wp-admin-pages.php');
-safe_require_once('/inc/wp-mail.php');
 
 add_action(
     'wp_enqueue_scripts',
     function () {
-        $tpl_dir = get_stylesheet_directory();
-        $tpl_dir_uri = get_stylesheet_directory_uri();
+        $tpl_dir = TPL_DIR;
+        $tpl_dir_uri = TPL_DIR_URI;
 
-        $path = '/css/bootstrap.min.css';
+        $path = '/assets/css/bootstrap.min.css';
         if (file_exists($tpl_dir . $path)) {
             wp_register_style('child-bootstrap-style', $tpl_dir_uri . $path, [], '5.2.3');
         }
-        $path = '/js/bootstrap.bundle.min.js';
+        $path = '/assets/js/bootstrap.bundle.min.js';
         if (file_exists($tpl_dir . $path)) {
             wp_register_script('child-bootstrap-script', $tpl_dir_uri . $path, [], '5.2.3', true);
         }
 
-        $path = '/js/alpine.min.js';
+        $path = '/assets/js/alpine.min.js';
         if (file_exists($tpl_dir . $path)) {
-            wp_register_script('child-alpine-script', $tpl_dir_uri . $path, [], '3.10.5', true);
+            wp_register_script('child-alpine-script', $tpl_dir_uri . $path, [], '3.13.0', true);
         }
 
-        $path = '/css/main.css';
+        $path = '/assets/css/main.css';
         if (file_exists($tpl_dir . $path)) {
             wp_enqueue_style('child-main-style', $tpl_dir_uri . $path, [], filemtime($tpl_dir . $path));
         }
-        $path = '/js/main.js';
+        $path = '/assets/js/main.js';
         if (file_exists($tpl_dir . $path)) {
             wp_enqueue_script('child-main-script', $tpl_dir_uri . $path, ['jquery'], filemtime($tpl_dir . $path), true);
         }
 
-        // connect scripts for few templates like this in array format
-        // if( is_page_template(['tpl-home.php', 'tpl-about.php']) ){
         wp_enqueue_style('child-bootstrap-style');
         wp_enqueue_script('child-bootstrap-script');
-        // }
 
-        // connecting alpine last so DOM event is ready
-        if (is_page_template('templates/tpl-alpine-demo.php')) {
+        /* connect styles to specific pages */
+        if (is_singular(['post'])) {
+            $path = '/assets/css/single-post.css';
+            if(file_exists($tpl_dir . $path)){
+                wp_enqueue_style('child-single-post-style', $tpl_dir_uri . $path, [], filemtime($tpl_dir . $path));
+            }
+        }
+
+        /* connecting alpine last so DOM event is ready */
+        if (is_page_template(['templates/tpl-alpine-demo.php'])) {
             wp_enqueue_script('child-alpine-script');
         }
 
-        if( is_singular(['post']) ){
-            $path = '/assets/css/single-post.css';
-            wp_enqueue_style('child-single-post-style', $tpl_dir_uri . $path, [], filemtime($tpl_dir . $path));
-
-            $path = '/assets/js/single-post.js';
-            wp_enqueue_script('child-single-post-script', $tpl_dir_uri . $path, ['jquery'], filemtime($tpl_dir . $path), true);
-        }
     },
     50
 );
 
 add_action('admin_enqueue_scripts', function () {
-    $tpl_dir = get_stylesheet_directory();
-    $tpl_dir_uri = get_stylesheet_directory_uri();
+    $tpl_dir = TPL_DIR;
+    $tpl_dir_uri = TPL_DIR_URI;
 
     $path = '/assets/js/admin-main.js';
     if (file_exists($tpl_dir . $path)) {
@@ -89,10 +93,10 @@ add_action('admin_enqueue_scripts', function () {
     wp_enqueue_style('child-admin-inter-font', 'https://fonts.googleapis.com/css2?family=Inter:wght@500;700&display=swap');
 });
 
-// Load styles to WYSIWYG editor
+// load styles to WYSIWYG editor
 add_filter('mce_css', function ($mce_css) {
-    $tpl_dir = get_stylesheet_directory();
-    $tpl_dir_uri = get_stylesheet_directory_uri();
+    $tpl_dir = TPL_DIR;
+    $tpl_dir_uri = TPL_DIR_URI;
 
     $path = '/assets/css/mce-editor.css';
     if (file_exists($tpl_dir . $path)) {
@@ -108,20 +112,13 @@ add_filter('mce_css', function ($mce_css) {
     return $mce_css;
 });
 
+
+/* change wp-admin login page styles */
 add_action('login_enqueue_scripts', function () {
-    $tpl_dir = get_stylesheet_directory();
-    $tpl_dir_uri = get_stylesheet_directory_uri();
+    $tpl_dir = TPL_DIR;
+    $tpl_dir_uri = TPL_DIR_URI;
     $path = '/assets/css/login.css';
     if (file_exists($tpl_dir . $path)) {
         wp_enqueue_style('child-login-style', $tpl_dir_uri . $path, [], filemtime($tpl_dir . $path));
     }
 });
-
-// Add classes to body
-// add_filter('body_class', function($classes){
-//     if( is_page_template(['tpl-home.php']) ){
-//         return $classes;
-//     } else {
-//         return array_merge($classes, ['my-custom-class'] );
-//     }
-// });

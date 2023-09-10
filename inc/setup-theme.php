@@ -2,12 +2,10 @@
 
 defined('ABSPATH') || die('403 Forbidden');
 
-// start PHP sessions
+/* start PHP sessions */
 add_action('init', function () {
     if (!session_id()) {
-        session_start([
-            'read_and_close' => true,
-        ]);
+        session_start(/* [ 'read_and_close' => true, ] */);
     }
 });
 

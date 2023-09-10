@@ -19,5 +19,5 @@ jQuery(function ($) {
         // AOS code at last here
     }
 
-    console.log('Developed by %c Arvind Kumar %c', 'background:#1565c0;color:#ffffff;padding:4px 5px;border-radius:18px;', '');
+    console.log('Developed by %c Byvex.com %c', 'background:#1565c0;color:#ffffff;padding:4px 5px;border-radius:18px;', '');
 });

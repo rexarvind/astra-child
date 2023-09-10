@@ -4,7 +4,7 @@
  * Template Name: Home Page
  */
 
-defined('ABSPATH') || die('403 Forbidden');
+defined('ABSPATH') || exit();
 
 get_header();
 ?>
@@ -12,7 +12,7 @@ get_header();
     <?php function_exists('astra_primary_content_top') ? astra_primary_content_top() : null; ?>
 
     <section>
-        <div class="container text-center">
+        <div class="container-lg text-center">
             <h1><?php the_title(); ?></h1>
         </div>
     </section>
