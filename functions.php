@@ -1,5 +1,9 @@
 <?php
 
+/**
+ * @author Byvex Team
+ */
+
 defined('ABSPATH') || exit();
 defined('SITE_NAME') || define('SITE_NAME', 'WordPress Site Name');
 defined('SITE_ADMIN_EMAIL') || define('SITE_ADMIN_EMAIL', get_bloginfo('admin_email'));
@@ -64,7 +68,7 @@ add_action(
         /* connect styles to specific pages */
         if (is_singular(['post'])) {
             $path = '/assets/css/single-post.css';
-            if(file_exists($tpl_dir . $path)){
+            if (file_exists($tpl_dir . $path)) {
                 wp_enqueue_style('child-single-post-style', $tpl_dir_uri . $path, [], filemtime($tpl_dir . $path));
             }
         }
@@ -73,7 +77,6 @@ add_action(
         if (is_page_template(['templates/tpl-alpine-demo.php'])) {
             wp_enqueue_script('child-alpine-script');
         }
-
     },
     50
 );
